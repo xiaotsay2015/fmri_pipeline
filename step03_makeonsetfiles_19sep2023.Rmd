@@ -1,0 +1,55 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+# Loading the 'tidyverse' package, which is a collection of R packages designed for data science.
+# This package includes functions for data manipulation, visualization, and more.
+library("tidyverse")
+
+# Defining a variable 'my_sub' to store the subject number.
+my_sub <- 1
+
+# Starting a loop that will iterate five times (from 1 to 5). The loop variable is 'ri'.
+for(ri in 1:5){
+  
+  # Constructing the file path for the input CSV file based on the subject number and run index.
+  # The 'sprintf' function is used to format the string with the appropriate values.
+  my_file <- sprintf("/Users/jonathantsay/Dropbox/ADVISING/JT_Tamar/GestureContextPilot/CodeForExp/output/sub%d/%d_run_%d_script_%d.csv", my_sub, my_sub, ri, ri + 15)
+  
+  # Reading the CSV file into a dataframe, adding two new columns: 'instruct_and_move_duration' and 'parametric_modulation'.
+  # The 'mutate' function is used to add these new columns.
+  mydata <- read.csv(my_file, header = TRUE) %>% 
+    mutate(instruct_and_move_duration = 1.5 + 2, 
+           parametric_modulation = 1) 
+  
+  # Creating a new dataframe 'myonset' with specific columns selected and possibly modified from 'mydata'.
+  myonset <- data.frame(onset = mydata$instruction.started, 
+                        duration = mydata$instruct_and_move_duration, 
+                        trial_type = mydata$uniquetrial, 
+                        ms_txt = mydata$ms_txt, 
+                        trial_fixation.started = mydata$trial_fixation.started, 
+                        jitter.started = mydata$jitter.started, 
+                        gesture_image = mydata$grip_txt)
+  
+  # Constructing the file path for the output TSV (Tab-Separated Values) file based on the subject number and run index.
+  myoutput <- sprintf("sub-0%d_task-gesture_run-0%d_events.tsv", my_sub, ri)
+  
+  # Printing the input file path and the output file path to the console. 
+  # This is likely for debugging or confirmation purposes.
+  print(my_file)
+  print(myoutput)
+  
+  # Setting the working directory to the location where the output file will be saved.
+  setwd(sprintf("/Users/jonathantsay/Library/CloudStorage/Dropbox/ADVISING/JT_Tamar/GestureContextPilot/CodeForExp/mri_data_cognestic_practice/data/bids/sub-0%d/func/", my_sub))
+  
+  # Writing the 'myonset' dataframe to a TSV file.
+  # 'col.names = TRUE' includes column names in the output file.
+  # 'row.names = FALSE' excludes row names from the output file.
+  # 'quote = F' means that output strings will not be enclosed in quotes.
+  # 'sep = "\t"' sets the field separator to a tab character, which is required for TSV files.
+  write.table(myonset, myoutput, col.names = TRUE, row.names = FALSE, quote= F, sep = "\t") 
+}
+
+# Closing the code chunk in the R Markdown document.
