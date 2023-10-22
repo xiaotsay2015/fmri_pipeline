@@ -2,9 +2,6 @@
 
 # This script is intended to run fmriprep, a functional magnetic resonance image preprocessing pipeline, using Singularity, a containerization tool.
 
-#-----------------------------------------------------------
-# Add some info to the job output at the start
-#-----------------------------------------------------------
 # Store the start time of the script. This will be used to calculate the total runtime of the script.
 start=$(date +%s)
 
@@ -13,10 +10,6 @@ date
 
 # Print the subject that is being processed. This subject ID is passed as the second argument when running the script.
 echo "Submitted subject: ${2}"
-
-# ======================================================================
-# FMRIPrep with Singularity
-# ======================================================================
 
 # Here we are using Singularity to run a specific version of fmriprep.
 # The '-B' option is used to bind paths from the host system to the container. In this case, the project directory.
@@ -52,7 +45,3 @@ singularity run --cleanenv -B "${1}":/"${1}" \
 # 13. --nthreads 16 --omp-nthreads 8: Specifies the number of threads for parallel computing.
 # 14. --stop-on-first-crash: If an error occurs, fmriprep will stop immediately.
 
-#-----------------------------------------------------------
-# Add some info to the job output at the end
-#-----------------------------------------------------------
-# Store the end time of

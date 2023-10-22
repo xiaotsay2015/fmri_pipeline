@@ -67,7 +67,3 @@ heudiconv \
     -b \
     --overwrite
 
-# End of Script
-# -------------
-# At this point, your script will submit a separate job for each subject in your subject list, and heudiconv will
-# process each subject's DICOM files in parallel.

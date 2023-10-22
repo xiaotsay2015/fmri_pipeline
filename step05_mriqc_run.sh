@@ -1,15 +1,7 @@
 #!/bin/bash
 
-#-----------------------------------------------------------
-# Define paths
-#-----------------------------------------------------------
-
 # Set the PROJECT_PATH variable to the root directory of the project
 PROJECT_PATH=/group/plasticity/Projects/JT_Semantomotor/
-
-# ======================================================================
-# MRIQC with Singularity
-# ======================================================================
 
 # Use the 'singularity' command to run a containerized version of MRIQC
 singularity run --cleanenv -B "$PROJECT_PATH":/"$PROJECT_PATH" \
