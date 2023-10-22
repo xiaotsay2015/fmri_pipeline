@@ -16,7 +16,7 @@
 # you must run it with the sbatch command and provide an array range to process multiple subjects.
 # For example, to run subjects 0 through 15, you would use:
 #
-# sbatch --array=0-15 ./step02_heudiconv_run.sh
+# sbatch --array=0-15 ./step01_heudiconv_run.sh
 #
 # Paths:
 # ------
